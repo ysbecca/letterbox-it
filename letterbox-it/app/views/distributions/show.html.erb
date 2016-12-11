@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @distribution.date %>
+</p>
+
+<p>
+  <strong>Participants:</strong>
+  <%= @distribution.participants %>
+</p>
+
+<p>
+  <strong>Routes:</strong>
+  <%= @distribution.routes %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @distribution.comments %>
+</p>
+
+<%= link_to 'Edit', edit_distribution_path(@distribution) %> |
+<%= link_to 'Back', distributions_path %>
