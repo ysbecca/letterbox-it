@@ -1,0 +1,54 @@
+<div id="googlemap"></div>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHL2s9qdWZH4JXh0abnr9FJtAE_2A9GZQ&libraries=drawing">
+</script>
+
+<script type="text/javascript">	
+
+	console.log("Hello");
+	var defaultZoom = 12;
+	var defaultCenter = new google.maps.LatLng(53.8008, -1.5491);
+
+	// Create map and add controls
+	var mapOptions = {
+		center: defaultCenter,
+		zoom: defaultZoom,
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		scrollwheel: true,
+		scaleControl: true
+	};
+
+	// The array of paths on the route
+	var routes = [];
+
+	var map = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
+	
+    poly = new google.maps.Polyline({
+		strokeColor: '#FFFF00',
+		strokeOpacity: 0.5,
+		strokeWeight: 10
+    });
+
+    poly.setMap(map);
+
+    // Add a listener for the click event
+    map.addListener('click', addLine);
+
+
+	// Handles click events on a map, and adds a new point to the Polyline.
+	function addLine(event) {
+		var path = poly.getPath();
+
+		// Because path is an MVCArray, we can simply append a new coordinate
+		// and it will automatically appear.
+		var coords = event.latLng;
+		var lat = coords.lat();
+		var lng = coords.lng();
+		path.push(coords);
+		routes.push( { lat, lng } );
+		console.log(routes);
+	}
+
+
+</script>
+
