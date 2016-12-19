@@ -1,12 +1,17 @@
+<p>
+	Select the routes covered by clicking at the starting and ending point of each block to draw a line. Routes do not need to be closed loops. To end a path and begin another one in another location, click the endpoint again.
+</p>
+
+<br />
 <div id="googlemap"></div>
+<br />
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHL2s9qdWZH4JXh0abnr9FJtAE_2A9GZQ&libraries=drawing">
 </script>
 
 <script type="text/javascript">	
 
-	console.log("Hello");
-	var defaultZoom = 12;
+	var defaultZoom = 17;
 	var defaultCenter = new google.maps.LatLng(53.8008, -1.5491);
 
 	// Create map and add controls
@@ -18,9 +23,6 @@
 		scaleControl: true
 	};
 
-	// The array of paths on the route
-	var routes = [];
-
 	var map = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
 	
     poly = new google.maps.Polyline({
@@ -30,6 +32,9 @@
     });
 
     poly.setMap(map);
+
+    // Handle for the routes data to be added to the page
+    var routes = document.getElementById("distribution_routes");
 
     // Add a listener for the click event
     map.addListener('click', addLine);
@@ -45,8 +50,9 @@
 		var lat = coords.lat();
 		var lng = coords.lng();
 		path.push(coords);
-		routes.push( { lat, lng } );
-		console.log(routes);
+
+		routes.value += lat + ", " + lng + " | ";
+		console.log(routes.value);
 	}
 
 
