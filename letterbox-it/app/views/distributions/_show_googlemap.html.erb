@@ -1,0 +1,50 @@
+<p>
+	Routes covered by this distribution:
+</p>
+
+<br />
+<div id="googlemap"></div>
+<br />
+
+<script type="text/javascript">	
+
+	var defaultZoom = 17;
+	// TODO save the centre and re-centre for each distribution, when click save.
+	var defaultCenter = new google.maps.LatLng(53.8008, -1.5491);
+
+	// Create map and add controls
+	var mapOptions = {
+		center: defaultCenter,
+		zoom: defaultZoom,
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		scrollwheel: true,
+		scaleControl: true
+	};
+
+	var map = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
+
+  	var drawingManager = new google.maps.drawing.DrawingManager({
+	    drawingMode: google.maps.drawing.OverlayType.MARKER,
+	    drawingControl: true,
+	    drawingControlOptions: {
+	      position: google.maps.ControlPosition.TOP_CENTER,
+	      drawingModes: ['polyline']
+	    },
+
+    	
+    	polylineOptions: {
+			fillColor: '#FFFF00',
+			strokeWeight: 10,
+			strokeOpacity: 0.5,
+			editable: true,
+			clickable: false,
+		}
+ 	});
+  	
+  	drawingManager.setMap(map);
+	
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHL2s9qdWZH4JXh0abnr9FJtAE_2A9GZQ&libraries=drawing&callback=initMap"
+         async defer></script>
+

@@ -3,58 +3,164 @@
 </p>
 
 <br />
-<div id="googlemap"></div>
+
+<div id="googlemap">
+	<div class="floating-panel">
+		<input onclick="removeRoute();" type=button value="Clear route">
+	</div>
+</div>
+
 <br />
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHL2s9qdWZH4JXh0abnr9FJtAE_2A9GZQ&libraries=drawing">
-</script>
 
 <script type="text/javascript">	
 
-	var defaultZoom = 17;
-	var defaultCenter = new google.maps.LatLng(53.8008, -1.5491);
+	// Handle for the routes data to be added to the page
+	var routes = document.getElementById("distribution_routes");
 
-	// Create map and add controls
-	var mapOptions = {
-		center: defaultCenter,
-		zoom: defaultZoom,
-		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		scrollwheel: true,
-		scaleControl: true
-	};
+	var map, drawingManager;
 
-	var map = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
+	// Initiates the map 
+	function initMap() {
+		var defaultZoom = 17;
+		var defaultCenter = new google.maps.LatLng(53.8008, -1.5491);
+
+		// Create map and add controls
+		var mapOptions = {
+			center: defaultCenter,
+			zoom: defaultZoom,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			scrollwheel: true,
+			scaleControl: true
+		};
+
+		map = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
+		
+		drawingManager = new google.maps.drawing.DrawingManager({
+			drawingMode: google.maps.drawing.OverlayType.Polyline,
+			drawingControl: true,
+			drawingControlOptions: {
+				position: google.maps.ControlPosition.TOP_CENTER,
+				drawingModes: ['polyline'],
+			},
+
+			polylineOptions: {
+				strokeColor: '#FFFF00',
+				strokeOpacity: 0.5,
+				strokeWeight: 10,
+				clickable: false,
+				editable: true,
+				zIndex: 1
+			}
+		});
+
+		drawingManager.setMap(map);
+
+		// Add a listener for the completed polyline event.
+  		google.maps.event.addListener(drawingManager, 'polylinecomplete', addLine);
+
+	}
+
+	// Handles the saving of a polyline once it is completed.
+	function addLine(polyline) {
+
+		console.log("In!");
+		console.log(polyline.getPath().latLng);
+
+	}
+
+	// Removes the routes and clears the map.
+	function removeRoute() {
+
+	}
 	
-    poly = new google.maps.Polyline({
-		strokeColor: '#FFFF00',
-		strokeOpacity: 0.5,
-		strokeWeight: 10
-    });
 
-    poly.setMap(map);
+</script>
 
-    // Handle for the routes data to be added to the page
-    var routes = document.getElementById("distribution_routes");
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHL2s9qdWZH4JXh0abnr9FJtAE_2A9GZQ&libraries=drawing&callback=initMap"
+         async defer></script>
 
-    // Add a listener for the click event
-    map.addListener('click', addLine);
 
+<script>
+/*
+
+	// Handle for the routes data to be added to the page
+	var routes = document.getElementById("distribution_routes");
+	var poly;
+
+	// Initiates the map 
+	function initMap() {
+		var defaultZoom = 17;
+		var defaultCenter = new google.maps.LatLng(53.8008, -1.5491);
+
+		// Create map and add controls
+		var mapOptions = {
+			center: defaultCenter,
+			zoom: defaultZoom,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			scrollwheel: true,
+			scaleControl: true
+		};
+
+		var map = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
+		
+	    initPoly();
+
+	    poly.setMap(map);
+	    
+	    // Add a listener for the click event
+	    map.addListener('click', addLine);
+	}
+
+	// Initialises a new polyline.
+	function initPoly() {
+		poly = new google.maps.Polyline({
+			strokeColor: '#FFFF00',
+			strokeOpacity: 0.5,
+			strokeWeight: 10
+	    });
+	}
 
 	// Handles click events on a map, and adds a new point to the Polyline.
 	function addLine(event) {
 		var path = poly.getPath();
 
-		// Because path is an MVCArray, we can simply append a new coordinate
-		// and it will automatically appear.
 		var coords = event.latLng;
 		var lat = coords.lat();
 		var lng = coords.lng();
+
+		var endingPath = false;
+		
+		if(path.length > 0) {
+			var lastLine = path[path.length - 1];
+			var oldCoords = lastLine.latLng;
+			var oldLat = oldCoords.lat();
+			var oldLng = oldCoords.lng();
+		}
+	
+
+		// Get last path ending.
+		if(lat == lastLat && lng == lastLng) {
+			initPoly();
+			path = poly.getPath();
+			endingPath = true;
+		}
+
 		path.push(coords);
 
-		routes.value += lat + ", " + lng + " | ";
+		if(!endingPath) {
+			routes.value += lat + ", " + lng + " | ";			
+		} else {
+			routes.value += '';
+		}
+
 		console.log(routes.value);
 	}
 
-
+	// Removes the route
+	function removeRoute() {
+		poly.setMap(null);
+		initPoly();
+	}
+*/
 </script>
-
