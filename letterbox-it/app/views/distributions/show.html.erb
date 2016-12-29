@@ -22,9 +22,9 @@
 <div class="hidden-routes" id="distribution-routes">
   <input type="text" value="<%= @distribution.routes %>" name="distribution[routes]" id="distribution_routes">
 </div>
+<div id="editing-field" class="editing-field"><%= @editing %></div>
 
-
-<%= render :partial => "show_googlemap" %>
+<%= render :partial => "googlemap" %>
 
 <p>
   <strong>Comments:</strong>

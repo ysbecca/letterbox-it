@@ -11,6 +11,11 @@
 	// All paths, for clearing map.
 	var allOverlays = [];
 
+	// Determine what functions to call based on if allowing drawing or not.
+	var editing = false;
+	if(document.getElementById("editing-field").textContent == "true") {
+		editing = true;
+	}
 
 	var map, drawingManager;
 
@@ -30,28 +35,33 @@
 
 		map = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
 		
-		drawingManager = new google.maps.drawing.DrawingManager({
-			drawingMode: google.maps.drawing.OverlayType.Polyline,
-			drawingControl: true,
-			drawingControlOptions: {
-				position: google.maps.ControlPosition.TOP_CENTER,
-				drawingModes: ['polyline'],
-			},
+		if(editing) {
+			drawingManager = new google.maps.drawing.DrawingManager({
+				drawingMode: google.maps.drawing.OverlayType.Polyline,
+				drawingControl: true,
+				drawingControlOptions: {
+					position: google.maps.ControlPosition.TOP_CENTER,
+					drawingModes: ['polyline'],
+				},
 
-			polylineOptions: {
-				strokeColor: '#FFFF00',
-				strokeOpacity: 0.5,
-				strokeWeight: 10,
-				clickable: false,
-				editable: true,
-				zIndex: 1
-			}
-		});
+				polylineOptions: {
+					strokeColor: '#FFFF00',
+					strokeOpacity: 0.5,
+					strokeWeight: 10,
+					clickable: false,
+					editable: true,
+					zIndex: 1
+				}
+			});
 
-		drawingManager.setMap(map);
-
-		// Add a listener for the completed polyline event.
-  		google.maps.event.addListener(drawingManager, 'polylinecomplete', addLine);
+			drawingManager.setMap(map);
+			console.log(editing);
+		
+			// Add a listener for the completed polyline event.
+	  		google.maps.event.addListener(drawingManager, 'polylinecomplete', addLine);
+		}
+	
+		displayPaths();
 	}
 
 	// Handles the saving of a polyline once it is completed.
@@ -69,6 +79,38 @@
 		routes.push(new_path); // Array of arrays [[lat, lng], [lat2, lng2]... ]
 		routesHandle.value = JSON.stringify(routes);
 	}
+
+	// Fetches the paths from routes and displays them.
+	function displayPaths() {
+    	
+    	if(routesHandle.value == "") {
+    		return;
+    	}
+
+		var routes = JSON.parse(routesHandle.value);
+		
+		// Now iterate through all the polylines and draw them on the map.
+		for(var i = 0; i < routes.length; i++) {
+			var newPath = [];
+			for (var j = 0; j < routes[i].length; j++) {
+				// routes[i][j] [[lat, lng], [lat2, lng2]...]
+				newPath.push({ lat: routes[i][j][0], lng: routes[i][j][1] });
+			}
+
+			var poly = new google.maps.Polyline({
+				path: newPath,
+				strokeColor: '#FFFF00',
+				strokeWeight: 10,
+				strokeOpacity: 0.5,
+				editable: false,
+				clickable: false,
+				zIndex: 5,
+			});
+
+			allOverlays.push(poly)
+			poly.setMap(map);
+		}
+ 	}
 
 	// Removes the routes and clears the map.
 	function clearMap() {
