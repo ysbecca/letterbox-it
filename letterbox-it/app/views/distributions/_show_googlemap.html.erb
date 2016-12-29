@@ -9,6 +9,10 @@
 <script type="text/javascript">	
 
 	var map;
+	var routesHandle = document.getElementById("distribution_routes");
+
+	// All paths, for clearing map.
+	var allOverlays = [];
 
 	function initMap() {
 
@@ -32,11 +36,8 @@
 	// Fetches the paths from routes and displays them.
 	function displayPaths() {
     	
-		var routesHandle = document.getElementById("distribution-routes");
-		console.log(routesHandle);
-		var routes = JSON.parse(routesHandle.textContent);
-
-		console.log(routes);
+		var routes = JSON.parse(routesHandle.value);
+		
 		// Now iterate through all the polylines and draw them on the map.
 		for(var i = 0; i < routes.length; i++) {
 			var newPath = [];
@@ -44,8 +45,6 @@
 				// routes[i][j] [[lat, lng], [lat2, lng2]...]
 				newPath.push({ lat: routes[i][j][0], lng: routes[i][j][1] });
 			}
-
-			console.log(newPath);
 
 			var poly = new google.maps.Polyline({
 				path: newPath,
@@ -57,11 +56,22 @@
 				zIndex: 5,
 			});
 
-			console.log(poly);
+			allOverlays.push(poly)
 			poly.setMap(map);
 		}
  
  	}
+
+	// Removes the routes and clears the map.
+	function clearMap() {
+		routesHandle.value = "";
+		
+		for (var i = allOverlays.length - 1; i >= 0; i--) {
+			allOverlays[i].setMap(null);
+		}
+
+		allOverlays = [];
+	}
 	
 
 </script>

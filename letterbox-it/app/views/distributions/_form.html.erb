@@ -26,12 +26,38 @@
     <%= f.number_field :quantity, :class => "form-control"  %>
   </div>
 
-  <div class="form-group hidden-routes">
-    <%= f.label :routes %>
-    <%= f.text_field :routes, :class => "form-control"  %>
-  </div>
+  <!-- If creating a new distribution or viewing one, do not allow editing. -->
+  <% if @not_showing %>
+    <p>
+      Select the routes covered by clicking at the starting and ending point of each block to draw a line. Routes do not need to be closed loops. To end a path and begin another one in another location, click the endpoint again.
+    </p>
 
-  <%= render :partial => "googlemap" %>
+    <br />
+
+    <div id="floating-panel">
+      <input onclick="clearMap();" type=button value="Clear map">
+    </div>
+
+  <% end %>
+
+  <% if !@editing %>
+    <div class="form-group hidden-routes">
+      <%= f.label :routes %>
+      <%= f.text_field :routes, :class => "form-control" %>
+    </div>
+
+    <%= render :partial => "googlemap", editing: @editing %>
+
+  <% else %>
+    <div class="form-group hidden-routes" id="distribution-routes">
+      <%= f.label :routes %>
+      <%= f.text_field :routes %>
+    </div>
+
+    <%= render :partial => "show_googlemap", editing: @editing %>
+  <% end %>
+
+  
 
   <div class="form-group">
     <%= f.label :comments %>

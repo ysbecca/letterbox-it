@@ -10,15 +10,21 @@ class DistributionsController < ApplicationController
   # GET /distributions/1
   # GET /distributions/1.json
   def show
+    @editing = false
+    @not_showing = false
   end
 
   # GET /distributions/new
   def new
     @distribution = Distribution.new
+    @editing = false
+    @not_showing = true
   end
 
   # GET /distributions/1/edit
   def edit
+    @editing = true
+    @not_showing = true
   end
 
   # POST /distributions

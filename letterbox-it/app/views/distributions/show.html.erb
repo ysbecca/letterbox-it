@@ -1,3 +1,7 @@
+<h1>Showing Distribution</h1>
+
+<br />
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -16,8 +20,9 @@
 </p>
 
 <div class="hidden-routes" id="distribution-routes">
-  <%= @distribution.routes %>
+  <input type="text" value="<%= @distribution.routes %>" name="distribution[routes]" id="distribution_routes">
 </div>
+
 
 <%= render :partial => "show_googlemap" %>
 
