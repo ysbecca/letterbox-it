@@ -87,7 +87,7 @@
     		return;
     	}
 
-		var routes = JSON.parse(routesHandle.value);
+		routes = JSON.parse(routesHandle.value);
 		
 		// Now iterate through all the polylines and draw them on the map.
 		for(var i = 0; i < routes.length; i++) {
@@ -107,7 +107,7 @@
 				zIndex: 5,
 			});
 
-			allOverlays.push(poly)
+			allOverlays.push(poly);
 			poly.setMap(map);
 		}
  	}
