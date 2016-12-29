@@ -15,10 +15,11 @@
   <%= @distribution.quantity %>
 </p>
 
-<p>
-  <strong>Routes:</strong>
+<div class="hidden-routes" id="distribution-routes">
   <%= @distribution.routes %>
-</p>
+</div>
+
+<%= render :partial => "show_googlemap" %>
 
 <p>
   <strong>Comments:</strong>

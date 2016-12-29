@@ -8,40 +8,60 @@
 
 <script type="text/javascript">	
 
-	var defaultZoom = 17;
-	// TODO save the centre and re-centre for each distribution, when click save.
-	var defaultCenter = new google.maps.LatLng(53.8008, -1.5491);
+	var map;
 
-	// Create map and add controls
-	var mapOptions = {
-		center: defaultCenter,
-		zoom: defaultZoom,
-		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		scrollwheel: true,
-		scaleControl: true
-	};
+	function initMap() {
 
-	var map = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
+		var defaultZoom = 17;
+		var defaultCenter = new google.maps.LatLng(53.8008, -1.5491);
 
-  	var drawingManager = new google.maps.drawing.DrawingManager({
-	    drawingMode: google.maps.drawing.OverlayType.MARKER,
-	    drawingControl: true,
-	    drawingControlOptions: {
-	      position: google.maps.ControlPosition.TOP_CENTER,
-	      drawingModes: ['polyline']
-	    },
+		// Create map and add controls
+		var mapOptions = {
+			center: defaultCenter,
+			zoom: defaultZoom,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			scrollwheel: true,
+			scaleControl: true
+		};
 
+		map = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
+
+		displayPaths();
+	}
+
+	// Fetches the paths from routes and displays them.
+	function displayPaths() {
     	
-    	polylineOptions: {
-			fillColor: '#FFFF00',
-			strokeWeight: 10,
-			strokeOpacity: 0.5,
-			editable: true,
-			clickable: false,
+		var routesHandle = document.getElementById("distribution-routes");
+		console.log(routesHandle);
+		var routes = JSON.parse(routesHandle.textContent);
+
+		console.log(routes);
+		// Now iterate through all the polylines and draw them on the map.
+		for(var i = 0; i < routes.length; i++) {
+			var newPath = [];
+			for (var j = 0; j < routes[i].length; j++) {
+				// routes[i][j] [[lat, lng], [lat2, lng2]...]
+				newPath.push({ lat: routes[i][j][0], lng: routes[i][j][1] });
+			}
+
+			console.log(newPath);
+
+			var poly = new google.maps.Polyline({
+				path: newPath,
+				strokeColor: '#FFFF00',
+				strokeWeight: 10,
+				strokeOpacity: 0.5,
+				editable: false,
+				clickable: false,
+				zIndex: 5,
+			});
+
+			console.log(poly);
+			poly.setMap(map);
 		}
- 	});
-  	
-  	drawingManager.setMap(map);
+ 
+ 	}
 	
 
 </script>
