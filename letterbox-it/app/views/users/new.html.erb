@@ -8,8 +8,11 @@
       <%= form.submit :class => "btn btn-info" %>
     </div>
 
+    <br />
+
     <div class="other-links">
-      <%= link_to t(".sign_in"), sign_in_path %>
+      <%= link_to t(".sign_in"), sign_in_path %> || 
+      <%= link_to t(".forgot_password"), new_password_path %>
     </div>
   <% end %>
 </div>

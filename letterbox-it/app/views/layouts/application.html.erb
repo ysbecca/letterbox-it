@@ -20,7 +20,7 @@
 	        <span class="icon-bar"></span>
 	      </button>
 	      <!-- Click the site name to return to home page. -->
-	      <a class="navbar-brand" href="#">Letterbox It</a>
+	      <a class="navbar-brand" href="#">Letterbox That</a>
 	    </div>
 
 	    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -39,31 +39,31 @@
 	        <li><a href="#">Contact</a></li>
 	      </ul>
 
-	      <!-- @TODO: insert a login form here, or static text and a logout button if user is logged in. -->
 	      <form class="navbar-form navbar-right">
-	        <div class="form-group">
-	          <input type="text" class="form-control" placeholder="Username">
-	          <input type="text" class="form-control" placeholder="Password">
-	        </div>
-	        <button type="submit" class="btn btn-default">Login</button>
+	      	<div class="form-group">
+		  		<!-- if logged in, display log out option and greeting -->
+		      	<% if signed_in? %>
+		      		Welcome, <%= current_user.firstname %>   || 
+					<%= link_to 'Log out', sign_out_path, method: :delete %>
+				<% else %>
+				<!-- if not logged in, display link to login page -->
+					<%= link_to 'Login or create new account', sign_in_path %>
+				<% end %>
+			</div>
 	      </form>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	</nav>
 
 	<div class="container-fluid">
-		<% if signed_in? %>
-			Signed in as: <%= current_user.email %>
-			<%= button_to 'Sign out', sign_out_path, method: :delete %>
-		<% else %>
-			<%= link_to 'Sign in', sign_in_path %>
-		<% end %>
 
-		<div id="flash">
-			<% flash.each do |key, value| %>
-			<div class="flash <%= key %>"><%= value %></div>
+		<% flash.each do |key, value| %>
+			<div id="flash" class="alert alert-danger alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<div class="flash <%= key %>"><%= value %></div>
+			</div>
 		<% end %>
-		</div>
+		
 
     	<%= yield %>
     </div>
