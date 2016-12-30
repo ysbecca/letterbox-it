@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20161230185137) do
     t.string   "firstname"
     t.string   "lastname"
     t.string   "default_map_centre"
-    t.boolean  "is_super_admin"
-    t.boolean  "is_admin"
+    t.boolean  "is_super_admin", null: false, default: false
+    t.boolean  "is_admin", null: false, default: false
     t.index ["email"], name: "index_users_on_email", using: :btree
     t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
   end

@@ -20,6 +20,7 @@ gem 'clearance'
 gem 'pg'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
+gem 'rails_admin'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
