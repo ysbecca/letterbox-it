@@ -8,8 +8,10 @@ RailsAdmin.config do |config|
   # end
   # config.current_user_method(&:current_user)
 
+  config.parent_controller = "::ApplicationController"
+
   config.authorize_with do
-    unless current_user.admin?
+    unless current_user.is_admin?
       redirect_to(
         main_app.root_path,
         alert: "You are not permitted to view this page"
@@ -17,7 +19,19 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.current_user_method { current_user }
+
+  config.model "User" do
+    edit do
+      field :is_admin
+      field :firstname
+      field :lastname
+      field :email
+      field :password
+      field :default_map_centre
+    end
+  end
+
+
 
   ## == Cancan ==
   # config.authorize_with :cancan
