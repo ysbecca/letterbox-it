@@ -1,4 +1,5 @@
 class DistributionsController < ApplicationController
+  before_action :require_login
   before_action :set_distribution, only: [:show, :edit, :update, :destroy]
 
   # GET /distributions

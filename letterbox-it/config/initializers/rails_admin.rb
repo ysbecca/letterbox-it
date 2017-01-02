@@ -11,10 +11,10 @@ RailsAdmin.config do |config|
   config.parent_controller = "::ApplicationController"
 
   config.authorize_with do
-    unless current_user.is_admin?
+    unless !current_user.nil? and current_user.is_admin?
       redirect_to(
         main_app.root_path,
-        alert: "You are not permitted to view this page"
+        alert: "Sorry, you are not permitted to view this page."
       )
     end
   end
