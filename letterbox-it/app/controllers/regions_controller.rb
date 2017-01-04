@@ -2,10 +2,17 @@ class RegionsController < ApplicationController
   before_action :require_login
   before_action :require_admin
   before_action :set_region, only: [:show, :edit, :update, :destroy]
+  skip_before_action :require_admin, only: [:index, :request]
 
   # GET /regions
   # GET /regions.json
+  # All users can only see the regions they are approved for.
   def index
+    @regions = current_user.regions
+  end
+
+  # Only admin has access to this!
+  def manage_all
     @regions = Region.all
   end
 
@@ -58,7 +65,7 @@ class RegionsController < ApplicationController
   def destroy
     @region.destroy
     respond_to do |format|
-      format.html { redirect_to regions_url, notice: 'Region was successfully destroyed.' }
+      format.html { redirect_to manage_all_regions_path, notice: 'Region was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

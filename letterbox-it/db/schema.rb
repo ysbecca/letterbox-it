@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104180541) do
+ActiveRecord::Schema.define(version: 20170104183512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,9 +34,12 @@ ActiveRecord::Schema.define(version: 20170104180541) do
     t.string   "country"
   end
 
-  create_table "regions_to_users", id: false, force: :cascade do |t|
+  create_table "regions_users", id: false, force: :cascade do |t|
     t.integer "region_id"
     t.integer "user_id"
+    t.boolean "approved"
+    t.date    "approval_date"
+    t.integer "admin_id"
   end
 
   create_table "users", force: :cascade do |t|
