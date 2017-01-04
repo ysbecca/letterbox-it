@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
 
+  resources :regions
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
   resource :session, controller: "clearance/sessions", only: [:create]
