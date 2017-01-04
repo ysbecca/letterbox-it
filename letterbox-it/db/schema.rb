@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104175314) do
+ActiveRecord::Schema.define(version: 20170104180541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,11 @@ ActiveRecord::Schema.define(version: 20170104175314) do
     t.string   "country"
   end
 
+  create_table "regions_to_users", id: false, force: :cascade do |t|
+    t.integer "region_id"
+    t.integer "user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
@@ -46,7 +51,9 @@ ActiveRecord::Schema.define(version: 20170104175314) do
     t.string   "default_map_centre"
     t.boolean  "is_super_admin"
     t.boolean  "is_admin"
+    t.integer  "region_id"
     t.index ["email"], name: "index_users_on_email", using: :btree
+    t.index ["region_id"], name: "index_users_on_region_id", using: :btree
     t.index ["remember_token"], name: "index_users_on_remember_token", using: :btree
   end
 
