@@ -19,6 +19,22 @@
   <strong>Longitude:</strong>
   <%= @region.longitude %>
 </p>
+<br />
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>All users approved for this region:</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @region.users.each do |user| %>
+      <tr>
+        <td><%= user.firstname %> <%= user.lastname %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to 'Edit', edit_region_path(@region) %> |
 <%= link_to 'Back', manage_all_regions_path %>

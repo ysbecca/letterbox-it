@@ -1,0 +1,42 @@
+<%= form_for(request) do |f| %>
+  <% if request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(request.error.count, "error") %> prohibited this request from being saved:</h2>
+
+      <ul>
+      <% request.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group hidden-routes">
+    <%= f.label :user_id %><br />
+    <input class="form-control" type="number" name="request[user_id]" id="request_user_id" value="<%= current_user.id %>">
+  </div>
+
+  <p>The city for which you would like to view all distributions. If not listed, please include city name in comments below.</p>
+
+  <div class="form-group">
+    <%= f.label :city %>&nbsp;&nbsp;&nbsp;
+     <%= f.collection_select :city, Region.order(:name), :id, :name, include_blank: true, :class => "form-control" %>
+  </div>
+
+  <div class="form-group hidden-routes">
+    <%= f.label :country %>
+    <%= f.text_field :country, :class => "form-control", :value => 'default' %>
+  </div>
+
+  
+  <div class="form-group">
+    <%= f.label :comments %>
+    <%= f.text_area :comments, :class => "form-control"  %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit :class => "btn btn-info" %>
+  </div>
+<% end %>
+
+<br />

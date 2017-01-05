@@ -1,0 +1,34 @@
+
+
+<h1>All Pending Requests</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Request Date</th>
+      <th>User</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>Comments</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @requests.each do |request| %>
+      <tr>
+        <td><%= request.created_at %></td>
+        <td><%= request.user.firstname %> <%= request.user.lastname %></td>
+        <td><%= Region.find(request.city).name %></td>
+        <td><%= request.country %></td>
+        <td><%= request.comments %></td>
+        <td><%= link_to 'Approve', approve_requests_path(request) %></td>
+        <td><%= link_to 'Reject', request, method: :delete, data: { confirm: 'Are you sure? Request will be deleted.' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Request', new_request_path, :class => "btn btn-info" %>

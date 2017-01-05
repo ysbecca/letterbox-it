@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   
 
+  resources :requests do
+    collection do
+      get 'manage_all'
+      get 'approve/:id' => :approve, as: 'approve'
+    end
+  end
+
   resources :regions do
     collection do
       get 'manage_all'
