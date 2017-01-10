@@ -21,8 +21,16 @@
 
 	// Initiates the map 
 	function initMap() {
-		var defaultZoom = 17;
-		var defaultCenter = new google.maps.LatLng(53.8008, -1.5491);
+		var defaultLatitude = document.getElementById("latitude-field").textContent;
+		var defaultLongitude = document.getElementById("longitude-field").textContent;
+
+		var defaultZoom = 12;
+		var defaultCenter;
+		if(defaultLatitude && defaultLongitude) {
+			defaultCenter = new google.maps.LatLng(defaultLatitude, defaultLongitude);
+		} else {
+			defaultCenter = new google.maps.LatLng(53.8008, -1.5491);
+		}
 
 		// Create map and add controls
 		var mapOptions = {

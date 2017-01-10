@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170105095456) do
+ActiveRecord::Schema.define(version: 20170110181911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20170105095456) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "quantity"
+    t.integer  "region_id"
   end
 
   create_table "regions", force: :cascade do |t|
@@ -60,7 +61,7 @@ ActiveRecord::Schema.define(version: 20170105095456) do
     t.string   "remember_token",     limit: 128, null: false
     t.string   "firstname"
     t.string   "lastname"
-    t.string   "default_map_centre"
+    t.integer  "default_region"
     t.boolean  "is_super_admin"
     t.boolean  "is_admin"
     t.integer  "region_id"

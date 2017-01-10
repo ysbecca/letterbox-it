@@ -46,7 +46,14 @@
     <%= f.text_field :routes %>
   </div>
 
+  <div class="form-group hidden-routes" id="distribution-default-region">
+    <%= f.label :region_id %>
+    <input class="form-control" type="number" name="distribution[region_id]" id="distribution_default_id" value="<%= current_user.default_region %>">
+  </div>
+
   <div id="editing-field" class="editing-field"><%= @editing %></div>
+  <div id="latitude-field" class="latitude-field"><%= @latitude %></div>
+  <div id="longitude-field" class="longitude-field"><%= @longitude %></div>
 
   <%= render :partial => "googlemap", editing: @editing %>
   

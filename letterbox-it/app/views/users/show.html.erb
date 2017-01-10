@@ -1,0 +1,36 @@
+<h1>Your User Settings</h1>
+
+<br />
+
+<p>
+  <strong>First name:</strong>
+  <%= @user.firstname %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @user.lastname %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Admin?</strong>
+  <% if @user.is_admin %>
+  	Yes
+  <% else %>
+  	No
+  <% end %>
+</p>
+
+<p>
+  <strong>Default city that distributions will be saved to:</strong><br/><br/>
+  <%= Region.find(@user.default_region).name %>
+</p>
+
+</br>
+
+<%= link_to "Edit User", edit_users_path(:id => current_user.id), :class => "btn btn-info" %>

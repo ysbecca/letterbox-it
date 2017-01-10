@@ -1,11 +1,14 @@
 class DistributionsController < ApplicationController
   before_action :require_login
   before_action :set_distribution, only: [:show, :edit, :update, :destroy]
+  before_action :set_default_coordinates
+
 
   # GET /distributions
   # GET /distributions.json
   def index
-    @distributions = Distribution.all
+    # TODO add all the regions the user is subscribed to
+    @distributions = Distribution.where(:region_id => current_user.regions)
   end
 
   # GET /distributions/1
@@ -66,6 +69,15 @@ class DistributionsController < ApplicationController
   end
 
   private
+    def set_default_coordinates
+      # Default is set to Leeds for any user
+      default_latitude = 53.8008
+      default_longitude = -1.5491
+
+      @latitude = current_user.default_region ? Region.find(current_user.default_region).latitude : default_latitude
+      @longitude = current_user.default_region ? Region.find(current_user.default_region).longitude : default_longitude
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_distribution
       @distribution = Distribution.find(params[:id])
@@ -73,6 +85,6 @@ class DistributionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def distribution_params
-      params.require(:distribution).permit(:date, :participants, :quantity, :routes, :comments)
+      params.require(:distribution).permit(:date, :participants, :quantity, :routes, :comments, :region_id)
     end
 end

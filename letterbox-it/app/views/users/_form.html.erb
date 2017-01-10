@@ -1,19 +1,49 @@
-<div class="form-group">
-  <%= form.label :first_name %>
-  <%= form.text_field :firstname, type: 'text', :class => "form-control" %>
-</div>
+<%= form_for(user) do |f| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-<div class="form-group">
-  <%= form.label :last_name %>
-  <%= form.text_field :lastname, type: 'text', :class => "form-control" %>
-</div>
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<div class="form-group">
-  <%= form.label :email %>
-  <%= form.text_field :email, type: 'email', :class => "form-control" %>
-</div>
+  <div class="form-group">
+    <%= f.label :first_name %>
+    <%= f.text_field :firstname, :class => "form-control"  %>
+  </div>
 
-<div class="form-group">
-  <%= form.label :password %>
-  <%= form.password_field :password, :class => "form-control" %>
-</div>
+  <div class="form-group">
+    <%= f.label :last_name %>
+    <%= f.text_field :lastname, :class => "form-control"  %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.text_field :email, :class => "form-control"  %>
+  </div>
+
+	<p>
+	  <strong>Admin?</strong>
+	  <% if @user.is_admin %>
+	  	Yes
+	  <% else %>
+	  	No
+	  <% end %>
+	</p>
+	<br/>
+	<p>Distributions will be centred in and saved under this city.</p>
+  <div class="form-group">
+    <%= f.label :current_distribution_city %>&nbsp;&nbsp;&nbsp;
+    <%= f.collection_select :default_region, @user.regions, :id, :name, include_blank: true, :class => "form-control", :selected => @user.default_region %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit :class => "btn btn-info"  %>
+  </div>
+<% end %>
+
+<br />

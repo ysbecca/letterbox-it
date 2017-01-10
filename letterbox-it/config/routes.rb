@@ -14,6 +14,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :users do
+    collection do
+      get 'show/:id' => :show, as: 'show'
+      get 'edit/:id' => :edit, as: 'edit'
+      patch 'update/:id' => :update, as: 'update'
+    end
+  end
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   resources :passwords, controller: "clearance/passwords", only: [:create, :new]
   resource :session, controller: "clearance/sessions", only: [:create]

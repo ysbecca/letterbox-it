@@ -2,10 +2,13 @@
 
 <h1>Distributions</h1>
 
+<p>You are currently viewing all distributions for cities you have joined.</p>
+
 <table class="table table-striped">
   <thead>
     <tr>
       <th>Date</th>
+      <th>City</th>
       <th>Participants</th>
       <th>Quantity</th>
       <th>Comments</th>
@@ -14,9 +17,10 @@
   </thead>
 
   <tbody>
-    <% @distributions.each do |distribution| %>
+    <% @distributions.each_with_index do |distribution, index| %>
       <tr>
         <td><%= distribution.date %></td>
+        <td><%= Region.find(distribution.region_id).name %></td>
         <td><%= distribution.participants %></td>
         <td><%= distribution.quantity %></td>
         <td><%= distribution.comments %></td>

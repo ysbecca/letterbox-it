@@ -19,6 +19,10 @@ class RequestsController < ApplicationController
 
     user = User.find(@request.user_id)
     user.regions << Region.find(@request.city)
+    if user.regions.length == 1
+      user.default_region = @request.city
+    end
+    
     user.save
 
     @request.destroy

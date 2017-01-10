@@ -27,7 +27,7 @@ RailsAdmin.config do |config|
       field :lastname
       field :email
       field :password
-      field :default_map_centre
+      field :default_region
     end
   end
 
