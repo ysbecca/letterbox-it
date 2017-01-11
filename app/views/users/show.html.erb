@@ -28,7 +28,11 @@
 
 <p>
   <strong>Default city that distributions will be saved to:</strong><br/><br/>
-  <%= Region.find(@user.default_region).name %>
+  <% if @user.default_region %>
+    <%= Region.find(@user.default_region).name %>
+  <% else %>
+    You have not been approved for any cities yet. <%= link_to "Click to join a city", new_request_path %>
+  <% end %>
 </p>
 
 </br>
