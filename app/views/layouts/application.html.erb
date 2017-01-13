@@ -3,7 +3,7 @@
   <head>
     <title>Eptah</title>
     <%= csrf_meta_tags %>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -20,7 +20,8 @@
 	        <span class="icon-bar"></span>
 	      </button>
 	      <!-- Click the site name to return to home page. -->
-	      <a class="navbar-brand" href="#">Eptah</a>
+	      <!-- <a class="navbar-brand" href="#">Eptah</a> -->
+	      <%= link_to "Eptah", root_path, :class => "navbar-brand" %>
 	    </div>
 
 	    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -61,7 +62,7 @@
 			    <!-- Signed in but not admin -->
 			    <li><%= link_to "User Settings", user_path(:id => current_user.id) %></li>
 	        <% end %>
-	        <li><a href="#">About &amp; Contact</a></li>
+	        <li><%= link_to "About & Contact", about_path %></li>
 	      </ul>
 
 	      <form class="navbar-form navbar-right">
