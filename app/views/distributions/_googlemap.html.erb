@@ -21,8 +21,14 @@
 
 	// Initiates the map 
 	function initMap() {
-		var defaultLatitude = document.getElementById("latitude-field").textContent;
-		var defaultLongitude = document.getElementById("longitude-field").textContent;
+
+		var defaultLatitude = document.getElementById("latitude-field");
+		var defaultLongitude = document.getElementById("longitude-field");
+
+		if(defaultLongitude && defaultLatitude) {
+			defaultLatitude = defaultLatitude.textContent;
+			defaultLongitude = defaultLongitude.textContent;
+		}
 
 		var defaultZoom = 12;
 		var defaultCenter;
